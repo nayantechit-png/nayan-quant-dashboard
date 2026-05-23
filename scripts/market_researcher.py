@@ -1,27 +1,41 @@
 """
 Market Researcher — Weekly Macro Bias
-Triggered every Sunday. Analyses USD trend, risk-on/off, key levels.
+Fetches LIVE prices first, then sends to Claude for analysis.
 Result → Telegram
 """
-import os, anthropic
+import os, sys, anthropic
+sys.path.insert(0, os.path.dirname(__file__))
 from telegram_sender import send
+from price_fetcher import get_live_prices, format_prices
 
 client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
-PROMPT = """You are a professional FX and index trader analyst.
-Analyse the current macro environment for prop trading this week.
+# ── Fetch live prices ──────────────────────────────────
+prices = get_live_prices()
+live   = format_prices(prices)
 
-Instruments: EURUSD, GBPUSD, XAUUSD (Gold), NAS100, USDJPY, AUDUSD, NZDUSD
+PROMPT = f"""You are a macro research analyst specialising in FX and commodities for prop trading.
 
-Provide:
-1. USD Bias (Bullish/Bearish/Neutral) with key reason
-2. Risk Sentiment (Risk-On / Risk-Off / Mixed)
-3. Per-instrument weekly bias (BUY / SELL / AVOID) with 1-line reason
-4. Top 3 setups to watch this week with entry zone
-5. Key events/data releases to avoid trading around
+{live}
 
-Format as a clean Telegram message with emojis. Keep it concise — traders need fast actionable info.
-Start with: 📊 *WEEKLY MACRO BIAS — [current week dates]*"""
+Using the EXACT current prices above, provide a weekly macro bias report for:
+EURUSD, GBPUSD, XAUUSD, NAS100, USDJPY, AUDUSD, NZDUSD
+
+For each instrument provide:
+- Current price (use the live price given above — do not invent levels)
+- Weekly bias: BULLISH / BEARISH / NEUTRAL
+- Key level to watch (support/resistance near the current price)
+- 1 key macro driver this week
+
+Then provide:
+TOP 3 SETUPS — best risk/reward opportunities this week with:
+- Entry zone (near current price ± realistic range)
+- Target
+- Stop loss
+- Rationale
+
+Format as clean Telegram message with emojis.
+Start with: 🔍 *WEEKLY MACRO BIAS — [today's date]*"""
 
 msg  = client.messages.create(model="claude-sonnet-4-5", max_tokens=1024, messages=[{"role":"user","content":PROMPT}])
 text = msg.content[0].text
