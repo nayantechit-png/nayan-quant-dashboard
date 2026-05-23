@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nayan Quant — AI Trading Dashboard</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <div>
+          <div class="logo-title">Nayan Quant</div>
+          <div class="logo-sub">AI Trading Intelligence</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="clock" id="clock">--:--:--</div>
+        <div class="tg-status" id="tgStatus">
+          <span class="dot"></span> Telegram
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO STRIP -->
+  <div class="hero-strip">
+    <div class="hero-inner">
+      <div class="hero-stat"><span class="stat-label">Instruments</span><span class="stat-val">EURUSD · GBPUSD · XAUUSD · NAS100 · USDJPY</span></div>
+      <div class="hero-stat"><span class="stat-label">Platform</span><span class="stat-val">GoatFunded · FTMO</span></div>
+      <div class="hero-stat"><span class="stat-label">Engine</span><span class="stat-val">Claude AI · MT5</span></div>
+      <div class="hero-stat"><span class="stat-label">Commands</span><span class="stat-val">6 Active</span></div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <main class="main">
+    <div class="section-title">AI Command Centre <span class="badge">Auto-Execute → Telegram</span></div>
+
+    <div class="commands-grid">
+
+      <!-- 1. MARKET RESEARCHER -->
+      <div class="cmd-card" id="card-market">
+        <div class="cmd-header">
+          <div class="cmd-icon">🔍</div>
+          <div class="cmd-tag">WEEKLY</div>
+        </div>
+        <div class="cmd-title">Market Researcher</div>
+        <div class="cmd-desc">Weekly macro bias for EURUSD, GBPUSD, XAUUSD, NAS100. USD trend, risk-on/off theme, key levels & directional bias.</div>
+        <div class="cmd-meta">
+          <span class="cmd-plugin">market-researcher</span>
+          <span class="cmd-schedule">⏱ Every Sunday</span>
+        </div>
+        <div class="cmd-footer">
+          <div class="last-run" id="last-market">Never run</div>
+          <button class="run-btn" id="btn-market" onclick="runCommand('market')">
+            <span class="btn-text">▶ Run Now</span>
+            <span class="btn-spin" style="display:none">⟳</span>
+          </button>
+        </div>
+        <div class="progress-bar" id="prog-market"></div>
+      </div>
+
+      <!-- 2. EARNINGS REVIEWER -->
+      <div class="cmd-card" id="card-earnings">
+        <div class="cmd-header">
+          <div class="cmd-icon">📊</div>
+          <div class="cmd-tag">WEEKLY</div>
+        </div>
+        <div class="cmd-title">Earnings Reviewer</div>
+        <div class="cmd-desc">Scans major tech earnings affecting NAS100. Flags which days to avoid trading & expected volatility moves.</div>
+        <div class="cmd-meta">
+          <span class="cmd-plugin">earnings-reviewer</span>
+          <span class="cmd-schedule">⏱ Mon & Thu</span>
+        </div>
+        <div class="cmd-footer">
+          <div class="last-run" id="last-earnings">Never run</div>
+          <button class="run-btn" id="btn-earnings" onclick="runCommand('earnings')">
+            <span class="btn-text">▶ Run Now</span>
+            <span class="btn-spin" style="display:none">⟳</span>
+          </button>
+        </div>
+        <div class="progress-bar" id="prog-earnings"></div>
+      </div>
+
+      <!-- 3. FX ANALYSIS -->
+      <div class="cmd-card" id="card-fx">
+        <div class="cmd-header">
+          <div class="cmd-icon">📈</div>
+          <div class="cmd-tag">DAILY</div>
+        </div>
+        <div class="cmd-title">FX Analysis</div>
+        <div class="cmd-desc">FX carry trade opportunities, implied vol surface check, USD strength index. Pre-trade filter for all FX pairs.</div>
+        <div class="cmd-meta">
+          <span class="cmd-plugin">lseg · market-researcher</span>
+          <span class="cmd-schedule">⏱ Daily 07:00</span>
+        </div>
+        <div class="cmd-footer">
+          <div class="last-run" id="last-fx">Never run</div>
+          <button class="run-btn" id="btn-fx" onclick="runCommand('fx')">
+            <span class="btn-text">▶ Run Now</span>
+            <span class="btn-spin" style="display:none">⟳</span>
+          </button>
+        </div>
+        <div class="progress-bar" id="prog-fx"></div>
+      </div>
+
+      <!-- 4. MODEL BUILDER -->
+      <div class="cmd-card" id="card-model">
+        <div class="cmd-header">
+          <div class="cmd-icon">💹</div>
+          <div class="cmd-tag">WEEKLY</div>
+        </div>
+        <div class="cmd-title">Performance Model</div>
+        <div class="cmd-desc">Analyses trade history — win rate by symbol, expectancy, optimal sizing. Recommends confidence threshold & position size changes.</div>
+        <div class="cmd-meta">
+          <span class="cmd-plugin">model-builder · wealth-management</span>
+          <span class="cmd-schedule">⏱ Every Friday</span>
+        </div>
+        <div class="cmd-footer">
+          <div class="last-run" id="last-model">Never run</div>
+          <button class="run-btn" id="btn-model" onclick="runCommand('model')">
+            <span class="btn-text">▶ Run Now</span>
+            <span class="btn-spin" style="display:none">⟳</span>
+          </button>
+        </div>
+        <div class="progress-bar" id="prog-model"></div>
+      </div>
+
+      <!-- 5. SP GLOBAL / EARNINGS CALENDAR -->
+      <div class="cmd-card" id="card-calendar">
+        <div class="cmd-header">
+          <div class="cmd-icon">📅</div>
+          <div class="cmd-tag">WEEKLY</div>
+        </div>
+        <div class="cmd-title">Earnings Calendar</div>
+        <div class="cmd-desc">NAS100 top component earnings dates for next 2 weeks. Automatically generates NAS100 block-trade dates for the EA.</div>
+        <div class="cmd-meta">
+          <span class="cmd-plugin">sp-global · equity-research</span>
+          <span class="cmd-schedule">⏱ Every Monday</span>
+        </div>
+        <div class="cmd-footer">
+          <div class="last-run" id="last-calendar">Never run</div>
+          <button class="run-btn" id="btn-calendar" onclick="runCommand('calendar')">
+            <span class="btn-text">▶ Run Now</span>
+            <span class="btn-spin" style="display:none">⟳</span>
+          </button>
+        </div>
+        <div class="progress-bar" id="prog-calendar"></div>
+      </div>
+
+      <!-- 6. RISK REPORT -->
+      <div class="cmd-card" id="card-risk">
+        <div class="cmd-header">
+          <div class="cmd-icon">🛡️</div>
+          <div class="cmd-tag">DAILY</div>
+        </div>
+        <div class="cmd-title">Risk Report</div>
+        <div class="cmd-desc">Account health check — drawdown status, daily loss %, prop firm rule compliance, SafeGuard status & position sizing safety.</div>
+        <div class="cmd-meta">
+          <span class="cmd-plugin">wealth-management · financial-analysis</span>
+          <span class="cmd-schedule">⏱ Daily 08:00</span>
+        </div>
+        <div class="cmd-footer">
+          <div class="last-run" id="last-risk">Never run</div>
+          <button class="run-btn" id="btn-risk" onclick="runCommand('risk')">
+            <span class="btn-text">▶ Run Now</span>
+            <span class="btn-spin" style="display:none">⟳</span>
+          </button>
+        </div>
+        <div class="progress-bar" id="prog-risk"></div>
+      </div>
+
+    </div>
+
+    <!-- RUN ALL -->
+    <div class="run-all-bar">
+      <button class="run-all-btn" onclick="runAll()">⚡ Run All 6 Commands → Telegram</button>
+      <div class="run-all-note">Executes all analyses sequentially and sends full report to your Telegram bot</div>
+    </div>
+
+    <!-- ACTIVITY LOG -->
+    <div class="log-section">
+      <div class="log-header">
+        <span>Activity Log</span>
+        <button class="clear-btn" onclick="clearLog()">Clear</button>
+      </div>
+      <div class="log-body" id="logBody">
+        <div class="log-entry log-info">System ready — click any command to execute analysis → Telegram</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div>⚡ Nayan Quant Auto AI &nbsp;·&nbsp; Powered by Autotrade AI &nbsp;·&nbsp; Claude Sonnet</div>
+    <div>Not financial advice — trade your own risk</div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
