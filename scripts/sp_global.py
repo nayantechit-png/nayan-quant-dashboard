@@ -1,16 +1,29 @@
 """
 S&P Global Earnings Calendar — NAS100 Block Dates
-Generates NAS100 trading block dates for next 2 weeks.
+Fetches LIVE NAS100 price first, then generates 2-week earnings calendar.
 Result → Telegram
 """
-import os, anthropic
+import os, sys, anthropic
+sys.path.insert(0, os.path.dirname(__file__))
 from telegram_sender import send
+from price_fetcher import get_live_prices, format_prices
 
 client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
-PROMPT = """You are an equity research analyst specialising in US tech stocks and NAS100.
+# ── Live prices ────────────────────────────────
+prices = get_live_prices()
+live   = format_prices(prices)
+nas100 = prices.get("NAS100", {}).get("price", "N/A")
+nas_chg = prices.get("NAS100", {}).get("change_pct", 0)
+
+PROMPT = f"""You are an equity research analyst specialising in US tech stocks and NAS100.
+
+{live}
+
+Current NAS100 level: {nas100} ({nas_chg:+.2f}% today)
 
 Generate a complete earnings calendar for NAS100 for the next 2 weeks.
+Use today's NAS100 price of {nas100} as the baseline for impact calculations.
 
 Focus on highest-impact components:
 Tier 1 (>3% NAS100 move expected): NVDA, AAPL, MSFT, GOOGL, AMZN, META, TSLA
@@ -20,7 +33,8 @@ For each company reporting:
 - Date & time (before/after market)
 - Expected EPS vs previous
 - Implied move % (options market expectation)
-- Impact on NAS100 (HIGH / MEDIUM / LOW)
+- Impact on NAS100 in points (based on current level {nas100})
+- Impact rating: HIGH / MEDIUM / LOW
 
 Then provide:
 BLOCK TRADE DATES — specific dates to avoid all NAS100 trading

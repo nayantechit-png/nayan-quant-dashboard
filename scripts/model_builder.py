@@ -1,14 +1,20 @@
 """
 Performance Model Builder — Weekly P&L Analysis
-Analyses trade stats and recommends system adjustments.
+Fetches LIVE prices first, then analyses trade stats.
 Result → Telegram
 """
-import os, anthropic
+import os, sys, anthropic
+sys.path.insert(0, os.path.dirname(__file__))
 from telegram_sender import send
+from price_fetcher import get_live_prices, format_prices
 
 client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
-# ── Load live stats from DB if available, else use last known ──
+# ── Live prices ────────────────────────────────
+prices = get_live_prices()
+live   = format_prices(prices)
+
+# ── Last known trade stats ─────────────────────
 STATS = {
     "total_trades": 49,
     "wins": 7,
@@ -28,6 +34,8 @@ STATS = {
 
 PROMPT = f"""You are a quantitative trading system analyst.
 
+{live}
+
 Analyse this prop trading system performance and recommend improvements:
 
 CURRENT STATS (Last 30 days):
@@ -40,13 +48,15 @@ CURRENT STATS (Last 30 days):
 - Worst day: {STATS['worst_day']}
 - Account: ${STATS['account_size']:,} | Daily DD: {STATS['daily_dd_limit_pct']}% | Max DD: {STATS['max_dd_pct']}%
 
+Use the live prices above to contextualise current market conditions when giving recommendations.
+
 Provide:
 1. DIAGNOSIS — what's causing the poor performance
 2. BREAKEVEN WIN RATE needed for this R:R
 3. CONFIDENCE THRESHOLD recommendation (currently fires at 7/10)
 4. MAX DAILY TRADES recommendation (currently unlimited)
-5. PAIRS TO DISABLE (losing pairs)
-6. POSITION SIZING adjustment
+5. PAIRS TO DISABLE based on current market conditions
+6. POSITION SIZING adjustment for current volatility
 7. EXPECTED improvement if recommendations followed
 
 Format as clean Telegram message with emojis.
