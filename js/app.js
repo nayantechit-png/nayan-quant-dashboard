@@ -6,12 +6,12 @@
 // ═══════════════════════════════════════════════
 
 const COMMANDS = {
-  market:   { label: "Market Researcher",  cmd: "/run market"   },
-  earnings: { label: "Earnings Reviewer",  cmd: "/run earnings" },
-  fx:       { label: "FX Analysis",        cmd: "/run fx"       },
-  model:    { label: "Performance Model",  cmd: "/run model"    },
-  calendar: { label: "Earnings Calendar",  cmd: "/run calendar" },
-  risk:     { label: "Risk Report",        cmd: "/run risk"     },
+  market:   { label: "Market Researcher",  cmd: "/market"   },
+  earnings: { label: "Earnings Reviewer",  cmd: "/earnings" },
+  fx:       { label: "FX Analysis",        cmd: "/fx"       },
+  model:    { label: "Performance Model",  cmd: "/model"    },
+  calendar: { label: "Earnings Calendar",  cmd: "/calendar" },
+  risk:     { label: "Risk Report",        cmd: "/risk"     },
 };
 
 // Bot username — set in config.js (no secrets needed)
@@ -108,7 +108,7 @@ function runCommand(key) {
 function runAll() {
   log("⚡ Opening Telegram for /runall ...", "running");
   openTelegram("/runall");
-  log("📲 /runall sent — tap Send in Telegram. All 6 results will come back automatically.", "success");
+  log("📲 /runall sent — tap Send in Telegram. All 6 results incoming.", "success");
 }
 
 // ── Init ──────────────────────────────────────
