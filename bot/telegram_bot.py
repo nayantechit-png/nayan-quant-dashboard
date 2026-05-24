@@ -38,22 +38,27 @@ COMMAND_MAP = {
 }
 
 MENU = """
-🤖 *Nayan Quant Auto AI*
-━━━━━━━━━━━━━━━━━━━━
-*Analysis Commands:*
-/market   — 🔍 Weekly Macro Bias
-/earnings — 📊 NAS100 Earnings Filter
-/fx       — 📈 FX Carry + Vol Analysis
-/model    — 💹 Performance Model
-/calendar — 📅 Earnings Calendar
-/risk     — 🛡️ Daily Risk Report
-/runall   — ⚡ Run All 6
+🤖 *NAYAN QUANT — AUTO AI*
+━━━━━━━━━━━━━━━━━━━━━━━━
 
-*Info Commands:*
-/status   — Current bot status
-/help     — This menu
-━━━━━━━━━━━━━━━━━━━━
-⚡ Powered by Autotrade AI
+📊 *ANALYSIS*
+/market   — Weekly Macro Bias
+/earnings — NAS100 Earnings Filter
+/fx       — FX Carry + Vol Session
+/model    — Performance Diagnosis
+/calendar — 2-Week Earnings Calendar
+/risk     — GoatFunded + FTMO Health
+
+⚡ *QUICK RUN*
+/runall   — Fire All 6 Analyses
+
+ℹ️ *INFO*
+/status   — Bot Status
+/help     — This Menu
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+_Prices fetched live before each analysis_
+⚡ Powered by Claude AI
 """
 
 # ── HTTP helpers ──────────────────────────────
