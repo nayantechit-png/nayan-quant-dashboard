@@ -2,7 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="NayanQuant"/>
+  <meta name="theme-color" content="#0a0c10"/>
   <title>Nayan Quant — AI Trading Dashboard</title>
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -21,9 +26,12 @@
         </div>
       </div>
       <div class="header-right">
-        <div class="clock" id="clock">--:--:--</div>
+        <div class="clock-wrap">
+          <div class="clock" id="clock">--:--:--</div>
+          <div class="clock-date" id="clockDate">Italia</div>
+        </div>
         <div class="tg-status" id="tgStatus">
-          <span class="dot"></span> Telegram
+          <span class="dot"></span> <span class="tg-label">Telegram</span>
         </div>
       </div>
     </div>
@@ -203,6 +211,15 @@
     <div>⚡ Nayan Quant Auto AI &nbsp;·&nbsp; Powered by Autotrade AI &nbsp;·&nbsp; Claude Sonnet</div>
     <div>Not financial advice — trade your own risk</div>
   </footer>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="mobile-nav">
+    <button class="nav-btn" onclick="runCommand('market')">🔍<span>Market</span></button>
+    <button class="nav-btn" onclick="runCommand('fx')">📈<span>FX</span></button>
+    <button class="nav-btn nav-center" onclick="runAll()">⚡<span>All</span></button>
+    <button class="nav-btn" onclick="runCommand('risk')">🛡️<span>Risk</span></button>
+    <button class="nav-btn" onclick="runCommand('calendar')">📅<span>Calendar</span></button>
+  </nav>
 
   <script src="js/config.js"></script>
   <script src="js/app.js"></script>

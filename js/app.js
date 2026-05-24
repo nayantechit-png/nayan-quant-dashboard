@@ -19,11 +19,27 @@ const BOT = (typeof CONFIG !== "undefined" && CONFIG.TELEGRAM_BOT_USERNAME)
   ? CONFIG.TELEGRAM_BOT_USERNAME.replace("@", "")
   : "nayanfinancialbot";
 
-// ── Clock ─────────────────────────────────────
+// ── Clock — Italian Time (CET/CEST) ───────────
 function updateClock() {
   const now = new Date();
-  document.getElementById("clock").textContent =
-    now.toUTCString().slice(17, 25) + " UTC";
+  const time = now.toLocaleString("it-IT", {
+    timeZone: "Europe/Rome",
+    hour:   "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
+  const date = now.toLocaleString("it-IT", {
+    timeZone: "Europe/Rome",
+    weekday: "short",
+    day:     "numeric",
+    month:   "short",
+  });
+  const tz = now.toLocaleString("en-GB", { timeZone: "Europe/Rome", timeZoneName: "short" })
+               .split(" ").pop(); // CET or CEST
+  document.getElementById("clock").textContent = `${time} ${tz}`;
+  const dateEl = document.getElementById("clockDate");
+  if (dateEl) dateEl.textContent = date;
 }
 setInterval(updateClock, 1000);
 updateClock();
@@ -31,7 +47,7 @@ updateClock();
 // ── Log ───────────────────────────────────────
 function log(msg, type = "info") {
   const body  = document.getElementById("logBody");
-  const now   = new Date().toUTCString().slice(17, 25);
+  const now   = new Date().toLocaleString("it-IT", { timeZone: "Europe/Rome", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
   const entry = document.createElement("div");
   entry.className = `log-entry log-${type}`;
   entry.innerHTML = `<span class="log-time">${now}</span>${msg}`;
